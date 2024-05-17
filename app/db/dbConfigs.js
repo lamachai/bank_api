@@ -1,0 +1,7 @@
+const DATABASE_NAME = "bank_api";
+const DATABASE_USER = "root";
+const DATABASE_PASSWORD = "";
+const DATABASE_HOST = "localhost";
+const DATABASE_DIALECT = "mysql";
+
+export { DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD, DATABASE_HOST, DATABASE_DIALECT }
