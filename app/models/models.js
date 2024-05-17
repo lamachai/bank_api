@@ -1,6 +1,8 @@
 import sequelize from "../db/db.js";
 import { DataTypes } from "sequelize";
 
+
+//users of the bank
 const User = sequelize.define("User", {
     name:{
         type: DataTypes.STRING,
@@ -8,16 +10,13 @@ const User = sequelize.define("User", {
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
-    Gender: {
+    gender: {
         type: DataTypes.ENUM("MALE", "FEMALE"),
         allowNull: false
         
-    },
-    bornDate: {
-        type: DataTypes.DATE,
-        allowNull: false
     },
     profession: {
         type: DataTypes.STRING,
@@ -26,14 +25,16 @@ const User = sequelize.define("User", {
     status:{
         type: DataTypes.ENUM('0', '1'),
         defaultValue: '1',
-        allowNull: false
     }
 });
 
+
+//the bank account
 const Account = sequelize.define("Account", {
     userId: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     accountType:{
         type: DataTypes.ENUM("STANDARD ACCOUNT", "SAVINGS ACCOUNT"),
@@ -43,11 +44,11 @@ const Account = sequelize.define("Account", {
     ,
     balance: {
         type: DataTypes.DOUBLE,
-        defaultValue: 0.0,
-        allowNull: false
+        defaultValue: 0.0
     }
 });
 
+//all the transfers history
 const Transfer = sequelize.define("Transfer", {
     fromAccount:{
         type: DataTypes.INTEGER,
@@ -75,20 +76,20 @@ const Transfer = sequelize.define("Transfer", {
 
 User.hasOne(Account, {
     foreignKey: "userId",
-    onDelete: "RESTRICT",
-    onUpdate: "RESTRICT",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
 });
 
 Account.hasOne(Transfer, {
     foreignKey: "fromAccount",
-    onDelete: "RESTRICT",
-    onUpdate: "RESTRICT"
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE"
 });
 
 Account.hasOne(Transfer, {
     foreignKey: "toAccount",
-    onDelete: "RESTRICT",
-    onUpdate: "RESTRICT"
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE"
 });
 
-export { sequelize }
+export { sequelize, User, Account, Transfer }

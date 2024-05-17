@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 //local imports
 import router from "./routes/routes.js";
 import { sequelize } from "./models/models.js";
+import cors from "cors"
 
 //app
 const app = express();
@@ -14,7 +15,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.use(cors())
 app.use(router);
+
 
 
 //database conection
